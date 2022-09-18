@@ -12,7 +12,7 @@ def getFileContents(path):
     while line:
         str = str + line
         line = f.readline()
-
+    return str
 
 # 把论文的内容进行分词，过滤特殊符号
 def filter(str):
