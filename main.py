@@ -19,6 +19,7 @@ def filter(str):
     str = jieba.lcut(str)
     result = []
     for tags in str:
+        # 只有属于26个字母和/或汉字的才属于要识别的内容，去除其它引号/分号/换行字符等
         if (re.match(u"[a-zA-Z0-9\u4e00-\u9fa5]", tags)):
             result.append(tags)
         else:
@@ -29,6 +30,7 @@ def filter(str):
 # 计算相似度
 def calculateSimilarty(text1, text2):
     texts = [text1, text2]
+    #为语料库中出现的所有单词分配了唯一的一个整数id
     dictionary = gensim.corpora.Dictionary(texts)
     corpus = [dictionary.doc2bow(text) for text in texts]
     similarity = gensim.similarities.Similarity('-Similarity-index', corpus, num_features=len(dictionary))
@@ -37,22 +39,18 @@ def calculateSimilarty(text1, text2):
     return cosine_sim
 
 
-# def print_hi(name):
-#     seg_list = jieba.lcut("我是一个坏人!?")
-#     path = r'C:\Users\林霏开\Desktop\readme.txt'
-#     f = open(path,'r',encoding='UTF-8')
-#     line = f.readlines()
-#     print(line)
 
 
 if __name__ == '__main__':
-    path1 = r'C:\Users\林霏开\Downloads\测试文本\orig.txt'
-    path2 = r'C:\Users\林霏开\Downloads\测试文本\orig_0.8_add.txt'
+    path1 = r'C:\Users\林霏开\Downloads\测试文本\ori1.txt'
+    path2 = r'C:\Users\林霏开\Downloads\测试文本\ori2.txt'
     save_path = r'C:\Users\林霏开\Desktop\readme.txt'
     str1 = getFileContents(path1)
     str2 = getFileContents(path2)
+    #str1和str2是字符串数据类型
     text1 = filter(str1)
     text2 = filter(str2)
+    #text1和text2是两个列表，每个列表里的元素都是划分出来的词
     similarity = calculateSimilarty(text1, text2)
     print("The simimarity between the articles you have given is %.4f" % similarity)
     f = open(save_path, 'w', encoding='utf-8')
