@@ -27,7 +27,7 @@ def filter(str):
     return result
 
 
-# 计算相似度
+# 计算相似度的第一种方法（词袋法）
 def calculateSimilarty(text1, text2):
     texts = [text1, text2]
     #为语料库中出现的所有单词分配了唯一的一个整数id
@@ -38,7 +38,8 @@ def calculateSimilarty(text1, text2):
     cosine_sim = similarity[test_corpus_1][1]
     return cosine_sim
 
-
+#计算相似度的第二种方法(Word2Vec) 这个方法暂时未实现 因为我的电脑下载不了word2vec这个库
+#def calculate_similarity(text1,text2):
 
 
 if __name__ == '__main__':
