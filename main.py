@@ -12,13 +12,13 @@ import os
 def getFileContents(path):
     str = ''
     with open(path, mode='r', encoding='UTF-8') as f:
-        f = open(path, 'r', encoding='UTF-8')
-
-    line = f.readline()
-    # 读出来的是以行为元素的一个list 这个while循环把所有的行的内容都放在一个str里面
-    while line:
-        str = str + line
         line = f.readline()
+        # 读出来的是以行为元素的一个list 这个while循环把所有的行的内容都放在一个str里面
+        while line:
+            str = str + line
+            line = f.readline()
+
+
     return str
 
 
@@ -55,9 +55,14 @@ def calculateSimilarty(text1, text2):
 
 
 if __name__ == '__main__':
-    path1 = r'C:\Users\林霏开\Downloads\测试文本\orig.txt'
-    path2 = r'C:\Users\林霏开\Downloads\测试文本\orig_0.8_add.txt'
-    save_path = r'C:\Users\林霏开\Desktop\save.txt'
+    #测试时为固定路径
+    # path1 = r'C:\Users\林霏开\Downloads\测试文本\orig.txt'
+    # path2 = r'C:\Users\林霏开\Downloads\测试文本\orig_0.8_add.txt'
+    # save_path = r'C:\Users\林霏开\Desktop\save.txt'
+    #命令行输入
+    path1 = sys.argv[1]
+    path2 = sys.argv[2]
+    save_path = sys.argv[3]
     str1 = getFileContents(path1)
     str2 = getFileContents(path2)
     # str1和str2是字符串数据类型
@@ -69,5 +74,5 @@ if __name__ == '__main__':
     NowOnTxt = datetime.strftime(datetime.now(), '%y-%m-%d %H:%M:%S')
     time = str(NowOnTxt)
     f = open(save_path, 'a', encoding='utf-8')
-    f.write("\n检测时间：%s\n文章一来源：%s\n文章二来源：%s\n 相似度：%.4f\n\n\n" % (time,path1,path2,similarity))
+    f.write("\n检测时间：%s\n文章一来源：%s\n文章二来源：%s\n 相似度：%.4f\n\n\n" % (time, path1, path2, similarity))
     f.close()
