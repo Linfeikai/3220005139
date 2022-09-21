@@ -1,9 +1,50 @@
+import sys
 import jieba
 import gensim
 import re
 from datetime import datetime
-import sys
+import argparse
 import os
+
+#检测文件路径是否正确以及是否非空
+def testFilePath(path,num):
+    if(num == 0):
+        if(os.path.isfile(path)):
+            if(os.path.getsize(path) != 0):
+                return path
+            else:
+                print('你输入的第一个文件是空的，请重新输入。感谢您的使用！')
+                sys.exit()
+        else:
+            print('你输入的第一个文件路径不存在。请重新输入。感谢您的使用！')
+            sys.exit()
+    elif(num == 1):
+        if(os.path.isfile(path)):
+            if(os.path.getsize(path) != 0):
+                return path
+            else:
+                print('你输入的第二个文件是空的，请重新输入。感谢您的使用！')
+                sys.exit()
+        else:
+            print('你输入的第二个文件路径不存在。请重新输入。感谢您的使用！')
+            sys.exit()
+    elif(num == 2):
+        if(os.path.isfile(path)):
+            return path
+        else:
+            workingPath = os.getcwd()
+            filePath = workingPath + "\\" + "save.txt"
+            file = open("save.txt", "w", encoding="utf8")  # 指定文件名和保存路径、文件操作类型、编码
+            file.write("文章查重检测记录")  # 写入内容
+            file.close()  # 关闭操作对象
+            print('结果输出路径不存在。将把结果储存在当前工作目录下的”save.txt“的文件。')
+            return filePath
+
+
+
+
+
+
 
 
 # 获取论文内的文件内容
@@ -17,7 +58,6 @@ def getFileContents(path):
         while line:
             str = str + line
             line = f.readline()
-
 
     return str
 
@@ -60,9 +100,22 @@ if __name__ == '__main__':
     # path2 = r'C:\Users\林霏开\Downloads\测试文本\orig_0.8_add.txt'
     # save_path = r'C:\Users\林霏开\Desktop\save.txt'
     #命令行输入
-    path1 = sys.argv[1]
-    path2 = sys.argv[2]
-    save_path = sys.argv[3]
+    # path1 = sys.argv[1]
+    # path2 = sys.argv[2]
+    # save_path = sys.argv[3]
+    #换了一种命令行输入的方法
+    parser = argparse.ArgumentParser(description='请依次传入要查重的第一份文件路径、第二份文件路径、结果保存路径（以空格隔开）')
+    parser.add_argument('param', type=str, nargs='+', help='参数')
+    args = parser.parse_args()
+    path1 = args.param[0]
+    path2 = args.param[1]
+    save_path = args.param[2]
+
+    path1 = testFilePath(path1,0)
+    path2 = testFilePath(path2,1)
+    save_path = testFilePath(save_path,2)
+
+    #这里的前提是 两个文件都要能打开，而且有内容
     str1 = getFileContents(path1)
     str2 = getFileContents(path2)
     # str1和str2是字符串数据类型

@@ -1,5 +1,5 @@
 from unittest import TestCase
-from main import calculateSimilarty,getFileContents,filter
+from main import calculateSimilarty,getFileContents,filter,testFilePath
 
 
 '''
@@ -28,6 +28,7 @@ class Test(TestCase):
         answer = ['今天','我','周三','开心']
         self.assertEqual(answer,filter('今天，我周三开心。'))
 
-    def test_
+    #这是一个测试测试函数的函数，由于时间缘故暂不实现了，逻辑比较简单。
+    # def test_testFilePath(self):
 if __name__ == '__main__':
     Test.main()
