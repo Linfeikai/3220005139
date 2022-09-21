@@ -20,8 +20,14 @@ class Test(TestCase):
     def test_getFileContents_existed(self):
         path = r'C:\Users\林霏开\Downloads\测试文本\ori1.txt'
         contents = getFileContents(path)
+
         self.assertEqual(contents,'今天周一，周一我觉得我快要死掉了。')
+    # def test_getFileContents_notexisted(self):
 
+    def test_filter(self):
+        answer = ['今天','我','周三','开心']
+        self.assertEqual(answer,filter('今天，我周三开心。'))
 
+    def test_
 if __name__ == '__main__':
     Test.main()
